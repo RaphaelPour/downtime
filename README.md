@@ -2,7 +2,7 @@
 
 Measures downtime by detecting the start and end of ICMP request timeouts (like `ping -D -W 0.05 -i 0.1 <target>`).
 
-The tool needs `sudo` and the net raw capability is needed to send raw ICMP requests:
+The tool needs `sudo` and the net raw capability to handle raw ICMP pakets:
 
 ```bash
 sudo setcap cap_net_raw+ep <path to binary>
