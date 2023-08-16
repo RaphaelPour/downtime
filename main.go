@@ -60,10 +60,10 @@ func checkForDowntime(target net.IP, interval, timeout time.Duration, check Repl
 		case <-ticker.C:
 			addr := &net.IPAddr{IP: target}
 			hop, err := icmp.SendICMP("", addr, "", 55, os.Getpid(), timeout, seq)
+			timestamp := time.Now()
 			if verbose {
 				fmt.Printf("hop=%v err=%s\n", hop, err)
 			}
-			timestamp := time.Now()
 			seq += 1
 
 			if check(hop) {
