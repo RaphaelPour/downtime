@@ -11,7 +11,7 @@ sudo setcap cap_net_raw+ep <path to binary>
 ## Quick start
 
 1. install: `go install github.com/RaphaelPour/downtime`
-2. set capability: ` `
+2. set capability: `sudo setcap cap_net_raw+ep <path to binary>`
 3. run: `sudo downtime --target <target>`
 
 example:
