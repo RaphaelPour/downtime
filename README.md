@@ -1,3 +1,5 @@
+![](downtime.png)
+
 # downtime
 
 Measures downtime by detecting the start and end of ICMP request timeouts (like `ping -D -W 0.05 -i 0.1 <target>`).
