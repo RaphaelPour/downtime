@@ -1,4 +1,4 @@
-![](downtime.png)
+<p align="center"><img src="downtime.png"></p>
 
 # downtime
 
