@@ -1,0 +1,33 @@
+version: '2'
+output: 'prefixed'
+
+includes:
+  _: https://raw.githubusercontent.com/FasterArbeit/task/master/go.yml
+
+vars:
+  BINARY_NAME: 'downtime'
+  REPOSITORY_NAME: 'downtime'
+  PATH: 'github.com/RaphaelPour/downtime'
+
+tasks:
+  bin:
+    desc: Build the go binary
+    cmds:
+      - CGO_ENABLED=0 go build -a -ldflags "-X {{.PATH}}/cmd/downtime.BuildDate={{.DATE}} -X {{.PATH}}/cmd/downtime.BuildVersion={{.VERSION}} -extldflags '-static' -s -w" -o ci-build/{{.BINARY_NAME}} cmd/downtime/main.go
+    vars:
+      DATE:
+        sh: date '+%Y-%m-%dT%H:%M:%S%z'
+      VERSION:
+        sh: git describe --tags || git describe --always
+  test:
+    desc: Run go test unittests
+    cmds:
+      - mkdir -p coverage
+      - go test -run "^Test[^_]" -v ./... -coverprofile=coverage/unittest_coverage.out -covermode=atomic
+  coverage:
+    desc: Generate coverage report
+    cmds:
+      - |
+        echo "mode: atomic" > coverage/total
+        grep "^github.com" -h coverage/*.out | sort >> coverage/total
+        go tool cover -html=coverage/total -o coverage/coverage.html
